@@ -16,10 +16,10 @@ The goals / steps of this project are the following:
 [image4]: ./output_images/image10.png
 [image5]: ./output_images/image11.png
 [image6]: ./output_images/image12.png
-[image7]: ./output_images/clip1.jpg
-[image8]: ./output_images/clip2.jpg
-[image9]: ./output_images/clip3.jpg
-[image10]: ./output_images/clip4.jpg
+[image7]: ./output_images/clip1.JPG
+[image8]: ./output_images/clip2.JPG
+[image9]: ./output_images/clip3.JPG
+[image10]: ./output_images/clip4.JPG
 [image11]: ./output_images/image15.png
 [image12]: ./output_images/image16.png
 [video1]: ./output_images/test_output.mp4
