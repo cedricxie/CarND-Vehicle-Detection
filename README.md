@@ -36,22 +36,22 @@ You're reading it!
 
 #### 1. Explain how (and identify where in your code) you extracted HOG features from the training images.
 
-The code for the function of extracting HOG features is contained in the 3rd code cell of the [Jupyter notebook](LINK)
+The code for the function of extracting HOG features is contained in the 3rd code cell of the [Jupyter notebook](https://github.com/cedricxie/CarND-Vehicle-Detection/blob/master/vehicle_detection_YX.ipynb)
 
 I started by reading in all the `vehicle` and `non-vehicle` images.  Here is an example of one of each of the `vehicle` and `non-vehicle` classes in both 64 by 64 original shape and 16 by 16 reduced size. As you can see, even in the image of reduced size, the difference between `vehicle` and `non-vehicle` images are still distinguishable.
 
-![Example Images of 64 by 64][image3]
-![Example Images of 16 by 16][image4]
+![Example Images of 64 by 64][image1]
+![Example Images of 16 by 16][image2]
 
 Furthermore, the HOG images for both images in gray scale are shown here in order to get a feel of how they look like.
 
-![Example Car Images and HOG Visualization][image9]
-![Example Non-Car Images and HOG Visualization][image10]
+![Example Car Images and HOG Visualization][image3]
+![Example Non-Car Images and HOG Visualization][image4]
 
 I then displayed them using 3D plots in different color spaces. Here is an example using the `RGB`, `HSV`, `YCrCb` color spaces. As shown, the images in the `YCrCb` color space seems to be the most clear and organized among all.
 
-![Vehicle Image][clip1]
-![Non-Vehicle Image][clip2]
+![Vehicle Image][image7]
+![Non-Vehicle Image][image8]
 
 #### 2. Explain how you settled on your final choice of HOG parameters.
 
@@ -97,8 +97,8 @@ The feature size is: 1188 = 11 * 2 * 2 * 3 * 3 * 3
 
 Two test cases are evaluated for all three trials to compare the performance. As demonstrated, HSV color space with HOG features tends to over predict cars, and the YCrCb color space with Color and HOG features tends to under predict the cars. Among all, the 3rd trial, YCrCb performs the best, and is therefore chosen.
 
-![Test Case 1][clip3]
-![Test Case 2][clip4]
+![Test Case 1][image9]
+![Test Case 2][image10]
 
 The feature vectors for both Car and Non-Car images are plotted for visualization.
 
@@ -107,7 +107,7 @@ The feature vectors for both Car and Non-Car images are plotted for visualizatio
 
 #### 3. Describe how (and identify where in your code) you trained a classifier using your selected HOG features (and color features if you used them).
 
-I trained a linear SVM, which is defined as ```clf = LinearSVC()```, as in the 6th Code Cell in the [Jupyter Notebook](LINK). It is fitting to the training data, and validated by the testing data, which are created by ```train_test_split``` tool in ```sklearn.model_selection```.
+I trained a linear SVM, which is defined as ```clf = LinearSVC()```, as in the 6th Code Cell in the [Jupyter Notebook](https://github.com/cedricxie/CarND-Vehicle-Detection/blob/master/vehicle_detection_YX.ipynb). It is fitted to the training data, and validated by the testing data, which are created by ```train_test_split``` tool in ```sklearn.model_selection```.
 
 ### Sliding Window Search
 
@@ -117,7 +117,7 @@ The Sliding window search is defined as in the 8th Code Cell in the [Jupyter Not
 1. The top and bottom position of the searched window is defined. A list of values is initially tried but found to be not very effective. Therefore a fixed value is given for each position.
 2. A list of scale factors to be searched is created using ```scale_list = np.array(range(1,10,1))*0.2+1```, and is looped to find all the bounding windows possible. This list is determined on a trial-and-error basis and is a balance between efficiency and effectiveness.
 
-####2. Show some examples of test images to demonstrate how your pipeline is working.  What did you do to optimize the performance of your classifier?
+#### 2. Show some examples of test images to demonstrate how your pipeline is working.  What did you do to optimize the performance of your classifier?
 
 In the end the YCrCb 3-channel HOG features is chosen and is proved to provide a nice result.  Here are some example images:
 
@@ -125,28 +125,28 @@ In the end the YCrCb 3-channel HOG features is chosen and is proved to provide a
 ![Second Demo of Pipeline][image12]
 
 Several optimization techniques are implemented in the codes, such as:
-1. Averaging the heat map and the most recent 40 frames for better stability and robustness.
+1. Averaging the heat map of the most recent 40 frames for better stability and robustness.
 2. Thresholding and masking the heat map to eliminate false positives.
 3. Overlaying the heat map in the output for better visualization and easy debugging.
 ---
 
 ### Video Implementation
 
-####1. Provide a link to your final video output.  Your pipeline should perform reasonably well on the entire project video (somewhat wobbly or unstable bounding boxes are ok as long as you are identifying the vehicles most of the time with minimal false positives.)
+#### 1. Provide a link to your final video output.  Your pipeline should perform reasonably well on the entire project video (somewhat wobbly or unstable bounding boxes are ok as long as you are identifying the vehicles most of the time with minimal false positives.)
 
 Here's a [link to my video result](./output_images/test_output.mp4), which is shared on [Youtube](https://youtu.be/dMt90mkirzw) as well.
 
 
-####2. Describe how (and identify where in your code) you implemented some kind of filter for false positives and some method for combining overlapping bounding boxes.
+#### 2. Describe how (and identify where in your code) you implemented some kind of filter for false positives and some method for combining overlapping bounding boxes.
 
-In the 8th Code Cell in the [Jupyter Notebook][LINK], a threshold of value 3 is applied on the heat map to remove areas of low confidence of having a car. In addition, a mask is applied on the heat map to remove the heat spots in the left one quarter of the image, because in this project video, this is the region where no cars shall be detected.
+In the 8th Code Cell in the [Jupyter Notebook](https://github.com/cedricxie/CarND-Vehicle-Detection/blob/master/vehicle_detection_YX.ipynb), a threshold of value 3 is applied on the heat map to remove areas of low confidence of having a car. In addition, a mask is applied on the heat map to remove the heat spots in the left one quarter of the image, because in this project video, this is the region where no cars shall be detected.
 
 Moreover, the heat map is averaged for the most recent 40 frames in order to merge together overlapping bounding boxes.
 
 ---
 
-###Discussion
+### Discussion
 
-####1. Briefly discuss any problems / issues you faced in your implementation of this project.  Where will your pipeline likely fail?  What could you do to make it more robust?
+#### 1. Briefly discuss any problems / issues you faced in your implementation of this project.  Where will your pipeline likely fail?  What could you do to make it more robust?
 
 1. The biggest problem I faced is how to find the good features set to extract that will yield the most optimal results. It is indeed to my surprise that, under current setting, including color channel will actually lead to worse results. I looked through the forums as well as some suggestions/posts from other students, and they indeed helped me a lot. I will have to dig further into that issue if I have more time. 
